@@ -28,7 +28,8 @@ import Feather from 'react-native-vector-icons/Feather';
 import Account from './src/screen/AccountScreen'
 import 'react-native-gesture-handler';
 import auth from '@react-native-firebase/auth';
-
+import  PhoneNumberLogin  from './src/screen/PhoneNumberLogin';
+import Otp from './src/screen/Otp';
 
 const MyTheme = {
   ...DefaultThemeNav,
@@ -43,9 +44,13 @@ const Tab = createBottomTabNavigator();
 
 const AuthNavigator = () => {
   return(
-    <Stack.Navigator>
-      <Stack.Screen name="login" component={Login} options={{headerShown:false}}/>
+    <Stack.Navigator 
+    initialRouteName='signup'>
+      <Stack.Screen name="login" component={PhoneNumberLogin} options={{headerShown:false}}/>
+      <Stack.Screen name="phone" component={PhoneNumberLogin} options={{headerShown:false}}/>
       <Stack.Screen name="signup" component={Signup} options={{headerShown:false}}/>
+      <Stack.Screen name="OTP" component={Otp} options={{headerShown:false}}/>
+
     </Stack.Navigator>
   )
 }

@@ -11,6 +11,7 @@ const Signup = ({navigation}) => {
     const [password, setPassword] = useState('')
 
     const userSignup = async () => {
+        
         if(!email||!password) {
             Alert.alert('Please all the fields');
             return
@@ -27,6 +28,7 @@ const Signup = ({navigation}) => {
         }
 
     }
+    
 
     return (
         <KeyboardAvoidingView behavior='position'>
