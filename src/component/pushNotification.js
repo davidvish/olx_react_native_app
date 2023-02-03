@@ -1,6 +1,7 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import messaging from '@react-native-firebase/messaging';
 
-async function requestUserPermission() {
+export async function requestUserPermission() {
   const authStatus = await messaging().requestPermission();
   const enabled =
     authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
@@ -8,5 +9,49 @@ async function requestUserPermission() {
 
   if (enabled) {
     console.log('Authorization status:', authStatus);
+    getFcmToken();
   }
+}
+
+const getFcmToken = async () => {
+  let fcmToken = await AsyncStorage.getItem('fcmToken');
+  console.log('Fcm Token old', fcmToken)
+  if(!fcmToken){
+    try {
+      let fcmToken = await messaging().getToken();
+      console.log('the new toke generate',fcmToken)
+      if(fcmToken){
+        await AsyncStorage.setItem('fcmToken', fcmToken)
+      }
+    } catch (error) {
+      alert(error.message)
+      
+    }
+  }
+}
+
+export const notificationListener = async () =>{
+  messaging().onNotificationOpenedApp(remoteMessage => {
+    console.log(
+      'Notification caused app to open from background state:',
+      remoteMessage.notification,
+    );
+
+    messaging().onMessage( async remoteMessage => {
+      console.log('foreground message', remoteMessage)
+
+    })
+    messaging()
+    .getInitialNotification()
+    .then(remoteMessage => {
+      if (remoteMessage) {
+        console.log(
+          'Notification caused app to open from quit state:',
+          remoteMessage.notification,
+        );
+        setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
+      }
+      setLoading(false);
+    });
+  });
 }

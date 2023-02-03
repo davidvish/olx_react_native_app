@@ -30,6 +30,7 @@ import 'react-native-gesture-handler';
 import auth from '@react-native-firebase/auth';
 import  PhoneNumberLogin  from './src/screen/PhoneNumberLogin';
 import Otp from './src/screen/Otp';
+import {requestUserPermission, notificationListener} from './src/component/pushNotification'
 
 const MyTheme = {
   ...DefaultThemeNav,
@@ -109,9 +110,7 @@ const Navigation = () =>{
   )
 }
 
-
 const App = () => {
-
 
   const theme = {
     ...DefaultTheme,
@@ -122,6 +121,11 @@ const App = () => {
       accent: '#f1c40f',
     },
   };
+
+  useEffect(()=>{
+    requestUserPermission()
+    notificationListener()
+  },[])
   return (
     <PaperProvider theme={theme}>
       <Navigation />
