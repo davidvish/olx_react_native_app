@@ -9,7 +9,7 @@ import { styles } from './CreateAds.style';
 
 
 
-const CreateAdsScreen = () => {
+const CreateAds = () => {
   const [name,setName] = useState('')
   const [desc,setDesc] = useState('')
   const [year, setYear] = useState('')
@@ -144,4 +144,4 @@ const CreateAdsScreen = () => {
 
 
 
-export default CreateAdsScreen
+export default CreateAds

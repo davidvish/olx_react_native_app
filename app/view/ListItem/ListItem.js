@@ -4,7 +4,7 @@ import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 import firestore from '@react-native-firebase/firestore'
 import { styles } from './ListItem.style';
 
-const ListItemScreen =  () => {
+const ListItem =  () => {
   const [items, setItems] = useState([])
   const [loading, setLoading] =useState(false)
 
@@ -70,4 +70,4 @@ const renderItem = (item) => {
   )
 }
 
-export default ListItemScreen
+export default ListItem

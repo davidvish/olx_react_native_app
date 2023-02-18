@@ -5,7 +5,7 @@ import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
 import { styles } from './Account.style';
 
-const AccountScreen =  () => {
+const Account =  () => {
   const [items, setItems] = useState([])
   const [loading, setLoading] =useState(false)
 
@@ -77,5 +77,4 @@ const renderItem = (item) => {
   )
 }
 
-export default AccountScreen
-
+export default Account

@@ -35,7 +35,7 @@ const Signup = ({navigation}) => {
         <View>
             <View style={styles.box1}>
                 <Image
-                    source={require('../assets/image/olx.png')}
+                    source={require('../../assets/image/olx.png')}
                     style={{ width: 200, height: 200 }}
                 />
                 <Text style={{color:'#000'}}>Sign-Up Details</Text>
