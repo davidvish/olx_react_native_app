@@ -94,9 +94,10 @@ const CreateAds = () => {
     <>
       <StatusBar backgroundColor={'red'} />
       <View style={styles.headerContainer}>
-        <Text style={styles.headTitle}>Add Your Products</Text>
+        <Text style={styles.headTitle}>Products Details</Text>
       </View>
       <View style={styles.container}>
+      <Text style={styles.text}>Add Products</Text>
         <TextInput
           label="Name"
           value={name}
