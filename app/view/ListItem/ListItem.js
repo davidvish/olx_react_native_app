@@ -1,73 +1,73 @@
-import { View, Text, FlatList, Linking } from 'react-native'
-import React, {useEffect, useState} from 'react'
-import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
-import firestore from '@react-native-firebase/firestore'
-import { styles } from './ListItem.style';
+import {View, Text, FlatList, Linking, StatusBar} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Avatar, Button, Card, Title, Paragraph} from 'react-native-paper';
+import firestore from '@react-native-firebase/firestore';
+import {styles} from './ListItem.style';
 
-const ListItem =  () => {
-  const [items, setItems] = useState([])
-  const [loading, setLoading] =useState(false)
+const ListItem = () => {
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(false);
 
+  const getDetails = async () => {
+    try {
+      const querySnap = await firestore().collection('ads').get();
+      const result = querySnap.docs.map(docSnap => docSnap.data());
+      console.log(result);
+      setItems(result);
+    } catch (err) {
+      console.log('error');
+    }
+  };
+  const openDial = phone => {
+    if (Platform.OS === 'android') {
+      Linking.openURL(`tel:${phone}`);
+    } else {
+      Linking.openURL(`telprompt:${phone}`);
+    }
+  };
 
-const getDetails = async() => {
- try {
- const querySnap = await firestore().collection('ads').get()
-  const result = querySnap.docs.map(docSnap=>docSnap.data())
-  console.log(result)
-  setItems(result)
- } catch (err) {
-   console.log("error")
- }
-}
-const openDial = (phone) => {
-  if (Platform.OS === 'android') {
-    Linking.openURL(`tel:${phone}`);
+  useEffect(() => {
+    getDetails();
+    return () => {
+      console.log('cleanup');
+    };
+  }, []);
 
-  } else {
-    Linking.openURL(`telprompt:${phone}`);
-  }
-}
-
-
-  useEffect(()=>{
-  getDetails()
-  return () => {
-    console.log('cleanup')
-  }
-},[])
-
-
-const renderItem = (item) => {
+  const renderItem = item => {
     return (
-        <Card style={styles.card}>
-    <Card.Title title={item.name} />
-    <Card.Content>
-      <Paragraph>{item.desc}</Paragraph>
-    </Card.Content>
-    <Card.Cover source={{ uri: item.image }} />
-    <Card.Actions>
-      <Button>{item.price}</Button>
-      <Button onPress={()=>openDial()}>Call Seller</Button>
-    </Card.Actions>
-  </Card>
-    )
-};
+      <Card style={styles.card}>
+        <Card.Title title={item.name} />
+        <Card.Content>
+          <Paragraph>{item.desc}</Paragraph>
+        </Card.Content>
+        <Card.Cover source={{uri: item.image}} />
+        <Card.Actions>
+          <Button>{item.price}</Button>
+          <Button onPress={() => openDial()}>Call Seller</Button>
+        </Card.Actions>
+      </Card>
+    );
+  };
 
   return (
     <View>
-      <FlatList 
-      data={items.reverse()}
-      keyExtractor={(item)=>item.phone}
-      renderItem={({item})=>renderItem(item)}
-      onRefresh={()=>{
-        setLoading(false)
-        getDetails()
-        setLoading(true)
-      }}
-      refreshing={loading}
+      <StatusBar  backgroundColor={'red'}/>
+      <View style={styles.headerContainer}>
+        <Text style={styles.headTitle}>Home</Text>
+      </View>
+      <FlatList
+        data={items.reverse()}
+        keyExtractor={item => item.phone}
+        renderItem={({item}) => renderItem(item)}
+        onRefresh={() => {
+          setLoading(false);
+          getDetails();
+          setLoading(true);
+        }}
+        refreshing={loading}
       />
     </View>
-  )
-}
+  );
+};
 
-export default ListItem
+export default ListItem;

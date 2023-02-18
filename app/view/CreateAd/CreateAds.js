@@ -1,4 +1,4 @@
-import {View, Text, KeyboardAvoidingView, Alert} from 'react-native';
+import {View, Text, KeyboardAvoidingView, Alert, StatusBar} from 'react-native';
 import React, {useState} from 'react';
 import {TextInput, Button} from 'react-native-paper';
 import auth from '@react-native-firebase/auth';
@@ -91,62 +91,66 @@ const CreateAds = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>CreateAdsScreen</Text>
-      <TextInput
-        label="Name"
-        value={name}
-        onChangeText={text => setName(text)}
-        mode="outlined"
-      />
-      <TextInput
-        label="Descriptions"
-        value={desc}
-        numberOfLines={3}
-        onChangeText={text => setDesc(text)}
-        mode="outlined"
-      />
-      <TextInput
-        label="Year of purchase"
-        value={year}
-        keyboardType="numeric"
-        onChangeText={text => setYear(text)}
-        mode="outlined"
-      />
-      <TextInput
-        label="Price in INR"
-        value={price}
-        keyboardType="numeric"
-        onChangeText={text => setPrice(text)}
-        mode="outlined"
-      />
-      <TextInput
-        label="Your Contact Number"
-        value={phone}
-        keyboardType="numeric"
-        onChangeText={text => setPhone(text)}
-        mode="outlined"
-      />
-      <Button
-        icon="camera"
-        mode="contained"
-        onPress={() => sendNotification()}
-        style={{marginVertical: 10}}>
-        send notification
-      </Button>
-      <Button icon="camera" mode="contained" onPress={() => openCamera()}>
-        Upload Image
-      </Button>
-      <View style={styles.box2}>
-        <Button
-          disabled={image ? false : true}
-          style={{marginHorizontal: 20}}
-          mode="contained"
-          onPress={() => postData()}>
-          Post
-        </Button>
+    <>
+      <StatusBar backgroundColor={'red'} />
+      <View style={styles.headerContainer}>
+        <Text style={styles.headTitle}>Add Your Products</Text>
       </View>
-    </View>
+      <View style={styles.container}>
+        <TextInput
+          label="Name"
+          value={name}
+          onChangeText={text => setName(text)}
+          mode="outlined"
+        />
+        <TextInput
+          label="Descriptions"
+          value={desc}
+          numberOfLines={3}
+          onChangeText={text => setDesc(text)}
+          mode="outlined"
+        />
+        <TextInput
+          label="Year of purchase"
+          value={year}
+          keyboardType="numeric"
+          onChangeText={text => setYear(text)}
+          mode="outlined"
+        />
+        <TextInput
+          label="Price in INR"
+          value={price}
+          keyboardType="numeric"
+          onChangeText={text => setPrice(text)}
+          mode="outlined"
+        />
+        <TextInput
+          label="Your Contact Number"
+          value={phone}
+          keyboardType="numeric"
+          onChangeText={text => setPhone(text)}
+          mode="outlined"
+        />
+        <Button
+          icon="camera"
+          mode="contained"
+          onPress={() => sendNotification()}
+          style={{marginVertical: 10}}>
+          send notification
+        </Button>
+        <Button icon="camera" mode="contained" onPress={() => openCamera()}>
+          Upload Image
+        </Button>
+        <View style={styles.box2}>
+          <Button
+            disabled={image ? false : true}
+            mode="contained"
+            onPress={() => postData()}>
+            Post
+          </Button>
+        </View>
+      </View>
+    </>
   );
 };
 
