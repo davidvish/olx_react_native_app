@@ -1,8 +1,9 @@
-import { View, Text, FlatList, StyleSheet, Linking } from 'react-native'
+import { View, Text, FlatList, Linking } from 'react-native'
 import React, {useEffect, useState} from 'react'
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
+import { styles } from './Account.style';
 
 const AccountScreen =  () => {
   const [items, setItems] = useState([])
@@ -75,11 +76,6 @@ const renderItem = (item) => {
     </View>
   )
 }
-const styles = StyleSheet.create({
-    card :{
-     margin:10,
-     elevation:2
-    }
-  })
+
 export default AccountScreen
 

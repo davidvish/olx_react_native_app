@@ -1,7 +1,8 @@
-import { View, Text, Image, StyleSheet, KeyboardAvoidingView,TouchableOpacity } from 'react-native'
+import { View, Text, Image, KeyboardAvoidingView,TouchableOpacity } from 'react-native'
 import React, { useState } from 'react';
 import { TextInput,Button } from 'react-native-paper';
 import auth from '@react-native-firebase/auth';
+import { styles } from './Login.style';
 
 
 
@@ -59,20 +60,5 @@ const login = ({navigation}) => {
     )
 };
 
-const styles = StyleSheet.create({
-    box1: {
-        alignItems: 'center'
-    },
-    box2 :{
-        paddingHorizontal:40,
-        height:'50%',
-        justifyContent:'space-evenly'
-    },
-    text:{
-        textAlign:'center',
-        fontSize:20,
-        color:'#000'
-    }
-})
 
 export default login

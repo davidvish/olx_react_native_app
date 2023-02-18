@@ -1,7 +1,8 @@
-import { View, Text, FlatList, StyleSheet, Linking } from 'react-native'
+import { View, Text, FlatList, Linking } from 'react-native'
 import React, {useEffect, useState} from 'react'
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
 import firestore from '@react-native-firebase/firestore'
+import { styles } from './ListItem.style';
 
 const ListItemScreen =  () => {
   const [items, setItems] = useState([])
@@ -68,10 +69,5 @@ const renderItem = (item) => {
     </View>
   )
 }
-const styles = StyleSheet.create({
-    card :{
-     margin:10,
-     elevation:2
-    }
-  })
+
 export default ListItemScreen

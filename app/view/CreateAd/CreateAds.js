@@ -1,10 +1,11 @@
-import { View, Text, StyleSheet, KeyboardAvoidingView,Alert } from 'react-native'
+import { View, Text, KeyboardAvoidingView,Alert } from 'react-native'
 import React, {useState} from 'react';
 import { TextInput,Button } from 'react-native-paper';
 import auth from '@react-native-firebase/auth';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
 import firestore from '@react-native-firebase/firestore';
+import { styles } from './CreateAds.style';
 
 
 
@@ -141,19 +142,6 @@ const CreateAdsScreen = () => {
   )
 }
 
-const styles = StyleSheet.create({
-  container :{
-    marginHorizontal:30,
-    justifyContent:'space-evenly',
-   
-  },
-  text : {
-    fontSize:30,
-    textAlign:'center'
-  },
-  box2:{
-    marginVertical:20
-  }
-})
+
 
 export default CreateAdsScreen
