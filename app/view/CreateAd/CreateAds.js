@@ -1,12 +1,13 @@
 import {View, Text, KeyboardAvoidingView, Alert, StatusBar} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {TextInput, Button} from 'react-native-paper';
 import auth from '@react-native-firebase/auth';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
 import firestore from '@react-native-firebase/firestore';
 import {styles} from './CreateAds.style';
-
+import Geocoder from 'react-native-geocoding';
+import Geolocation from '@react-native-community/geolocation';
 const CreateAds = () => {
   const [name, setName] = useState('');
   const [desc, setDesc] = useState('');
@@ -14,6 +15,9 @@ const CreateAds = () => {
   const [price, setPrice] = useState('');
   const [phone, setPhone] = useState('');
   const [image, setImage] = useState('');
+  const [location, setLocation] = useState()
+  const [address, setAddress] = useState();
+  const [latitude, setLatitude] = useState();
 
   const sendNotification = () => {
     firestore()
@@ -89,7 +93,32 @@ const CreateAds = () => {
       );
     });
   };
+  const getLocation = () => {
+    Geolocation.getCurrentPosition(info => {
+      console.log('check Geolocation output ==>' + info)
+      setLocation({
+        lat: info.coords.latitude,
+        lng: info.coords.longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta:0.0421,
+      })
+      Geocoder.init('AIzaSyBxeZb8EuggjfXFqDztCeJpXgvkb2AEq8Y'); // use a valid API key
+      Geocoder.from(info.coords.latitude, info.coords.longitude)
+      .then(JSON => {
+        console.log("checking Geocoder json data ==>", JSON);
+        JSON.results[0].address_components.forEach((value, index) =>{
+          setAddress({address: JSON.results[0].formatted_address})
 
+        })
+      })
+    })
+  };
+
+  useEffect(()=>{
+    getLocation();
+  },[])
+
+  
   return (
     <>
       <StatusBar backgroundColor={'red'} />
@@ -97,7 +126,7 @@ const CreateAds = () => {
         <Text style={styles.headTitle}>Products Details</Text>
       </View>
       <View style={styles.container}>
-      <Text style={styles.text}>Add Products</Text>
+        <Text style={styles.text}>Add Products</Text>
         <TextInput
           label="Name"
           value={name}
@@ -132,6 +161,10 @@ const CreateAds = () => {
           onChangeText={text => setPhone(text)}
           mode="outlined"
         />
+        <Button icon="map" mode="contained" 
+        onPress={() => getLocation()}>
+          Location
+        </Button>
         <Button
           icon="camera"
           mode="contained"

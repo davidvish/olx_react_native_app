@@ -1,5 +1,5 @@
 import { View, Text, Image, KeyboardAvoidingView,TouchableOpacity } from 'react-native'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TextInput,Button } from 'react-native-paper';
 import auth from '@react-native-firebase/auth';
 import { styles } from './Login.style';
@@ -22,13 +22,16 @@ const login = ({navigation}) => {
             Alert.alert('Something Wrong Please try different password');
         }
     }
+    useEffect(()=>{
+        auth().signOut()
+    },[])
 
     return (
         <KeyboardAvoidingView behavior='position'>
         <View>
             <View style={styles.box1}>
                 <Image
-                    source={require('../assets/image/olx.png')}
+                    source={require('../../assets/image/olx.png')}
                     style={{ width: 200, height: 200 }}
                 />
                 <Text style={{color:'#000'}}>Please Login Here</Text>
